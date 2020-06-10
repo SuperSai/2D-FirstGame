@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask ground;
     public float speed;
     public float jumpForce;
-    // Start is called before the first frame update
+    public int cherry;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -39,10 +40,20 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(dir, 1, 1);
         }
         //跳跃
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
             anim.SetBool("jumping", true);
+            anim.SetBool("crouch", false);
+        }
+        var vrtical = Input.GetAxisRaw("Vertical");
+        if (vrtical == -1 && !anim.GetBool("jumping"))
+        {
+            anim.SetBool("crouch", true);
+        }
+        else if (vrtical == 0)
+        {
+            anim.SetBool("crouch", false);
         }
     }
 
@@ -62,6 +73,15 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("falling", false);
             anim.SetBool("idle", true);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Collection")
+        {
+            Destroy(collision.gameObject);
+            cherry += 1;
         }
     }
 }
