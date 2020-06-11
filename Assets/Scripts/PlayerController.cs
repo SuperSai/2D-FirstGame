@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,9 +9,11 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     public Collider2D coll;
     public LayerMask ground;
+    public Text cherryNum;
     public float speed;
     public float jumpForce;
     public int cherry;
+    private bool isHurt;
 
     void Start()
     {
@@ -20,7 +23,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Movement();
+        if (!isHurt)
+        {
+            Movement();
+        }
         SwitchAnim();
     }
 
@@ -69,6 +75,18 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("falling", true);
             }
         }
+        else if (isHurt)
+        {
+            anim.SetBool("hurt", true);
+            //因为在移动过程中碰到了怪物，这个值没变回0，所以就不会却换到站立状态，这里设置为0
+            anim.SetFloat("running", 0);
+            if (Mathf.Abs(rb.velocity.x) < 0.1f)
+            {
+                anim.SetBool("hurt", false);
+                anim.SetBool("idle", true);
+                isHurt = false;
+            }
+        }
         else if (coll.IsTouchingLayers(ground))
         {
             anim.SetBool("falling", false);
@@ -82,6 +100,30 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             cherry += 1;
+            cherryNum.text = cherry + "";
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            if (anim.GetBool("falling"))
+            {
+                Destroy(other.gameObject);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
+                anim.SetBool("jumping", true);
+            }
+            else if (transform.position.x < other.gameObject.transform.position.x)
+            {
+                rb.velocity = new Vector2(-5, rb.velocity.y);
+                isHurt = true;
+            }
+            else if (transform.position.x > other.gameObject.transform.position.x)
+            {
+                rb.velocity = new Vector2(5, rb.velocity.y);
+                isHurt = true;
+            }
         }
     }
 }
