@@ -67,6 +67,10 @@ public class PlayerController : MonoBehaviour
     {
         anim.SetBool("idle", false);
 
+        if (rb.velocity.y < 0.1f && !coll.IsTouchingLayers(ground))
+        {
+            anim.SetBool("falling", true);
+        }
         if (anim.GetBool("jumping"))
         {
             if (rb.velocity.y < 0)
@@ -108,9 +112,10 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
             if (anim.GetBool("falling"))
             {
-                Destroy(other.gameObject);
+                enemy.JumpOn();
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
                 anim.SetBool("jumping", true);
             }
