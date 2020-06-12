@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
     public Collider2D coll;
+    public Collider2D disColl;
+    public Transform cellingCheck;
     public LayerMask ground;
     public Text cherryNum;
     public float speed;
@@ -38,7 +41,7 @@ public class PlayerController : MonoBehaviour
         //移动
         if (horizontal != 0)
         {
-            rb.velocity = new Vector2(horizontal * speed * Time.deltaTime, rb.velocity.y);
+            rb.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb.velocity.y);
             anim.SetFloat("running", Mathf.Abs(dir));
         }
 
@@ -49,20 +52,12 @@ public class PlayerController : MonoBehaviour
         //跳跃
         if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime);
             audioSource.Play();
             anim.SetBool("jumping", true);
             anim.SetBool("crouch", false);
         }
-        var vrtical = Input.GetAxisRaw("Vertical");
-        if (vrtical == -1 && !anim.GetBool("jumping"))
-        {
-            anim.SetBool("crouch", true);
-        }
-        else if (vrtical == 0)
-        {
-            anim.SetBool("crouch", false);
-        }
+        Crouch();
     }
 
     private void SwitchAnim()
@@ -100,14 +95,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //碰撞触发器
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //收集物品
         if (collision.tag == "Collection")
         {
             cherryAudio.Play();
             Destroy(collision.gameObject);
             cherry += 1;
             cherryNum.text = cherry + "";
+        }
+        //游戏重新开始
+        if (collision.tag == "DeadLine")
+        {
+            GetComponent<AudioSource>().enabled = false;
+            //延迟2秒重新刷新游戏
+            Invoke("Restart", 1f);
         }
     }
 
@@ -137,5 +141,30 @@ public class PlayerController : MonoBehaviour
                 isHurt = true;
             }
         }
+    }
+
+    //蹲下
+    void Crouch()
+    {
+        //Physics2D.OverlapCircl：意思是说检查某个点的圆形上是否碰到某个图层
+        if (!Physics2D.OverlapCircle(cellingCheck.position, 0.2f, ground))
+        {
+            if (Input.GetButton("Crouch"))
+            {
+                disColl.enabled = false;
+                anim.SetBool("crouch", true);
+            }
+            else
+            {
+                disColl.enabled = true;
+                anim.SetBool("crouch", false);
+            }
+        }
+    }
+
+    void Restart()
+    {
+        //GetActiveScene().name:获取当前使用的场景的名字
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
