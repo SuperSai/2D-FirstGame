@@ -53,11 +53,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Cherry.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\Enemy_Eagle.cs" />
      <Compile Include="Assets\Scripts\Enemy_Frog.cs" />
      <Compile Include="Assets\Scripts\EnterDialog.cs" />
      <Compile Include="Assets\Scripts\EnterHouse.cs" />
+     <Compile Include="Assets\Scripts\Parallax.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Zero Rare\Retro Sound Effects\Demo\Demo.cs" />
      <None Include="Assets\CasualGameBGM05\ReadMe.txt" />
@@ -70,11 +72,23 @@
  <Reference Include="Unity.UIWidgets.Editor">
  <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.UIWidgets.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.Editor">
+ <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.Runtime">
+ <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.UIWidgets">
  <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.UIWidgets.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Lightweight.Runtime">
+ <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.RenderPipelines.Lightweight.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Lightweight.Editor">
+ <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.RenderPipelines.Lightweight.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.PackageManagerUI.Editor">
  <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
@@ -82,14 +96,26 @@
  <Reference Include="Unity.CollabProxy.Editor">
  <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Postprocessing.Editor">
+ <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Messenger.Editor">
  <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.Messenger.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Postprocessing.Runtime">
+ <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="Unity.InternalAPIEditorBridge.023">
  <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.023.dll</HintPath>
  </Reference>
  <Reference Include="com.unity.cinemachine.editor">
  <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ShaderGraph.Editor">
+ <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+ <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
@@ -99,30 +125,6 @@
  </Reference>
  <Reference Include="Unity.InternalAPIEngineBridge.024">
  <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.024.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Core.Editor">
- <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Core.Runtime">
- <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Lightweight.Runtime">
- <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.RenderPipelines.Lightweight.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Lightweight.Editor">
- <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.RenderPipelines.Lightweight.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Postprocessing.Editor">
- <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Postprocessing.Runtime">
- <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ShaderGraph.Editor">
- <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
- <HintPath>E:/work/2D-FirstGame/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>D:/Unity3D/2018.4.23f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

@@ -34,6 +34,15 @@ public class PlayerController : MonoBehaviour
         SwitchAnim();
     }
 
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    void Update()
+    {
+        Jump();
+        Crouch();
+    }
+
     private void Movement()
     {
         var horizontal = Input.GetAxis("Horizontal");
@@ -49,20 +58,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(dir, 1, 1);
         }
-        //跳跃
-        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime);
-            audioSource.Play();
-            anim.SetBool("jumping", true);
-            anim.SetBool("crouch", false);
-        }
-        Crouch();
+
     }
 
     private void SwitchAnim()
     {
-        anim.SetBool("idle", false);
+        //anim.SetBool("idle", false);
 
         if (rb.velocity.y < 0.1f && !coll.IsTouchingLayers(ground))
         {
@@ -84,14 +85,14 @@ public class PlayerController : MonoBehaviour
             if (Mathf.Abs(rb.velocity.x) < 0.1f)
             {
                 anim.SetBool("hurt", false);
-                anim.SetBool("idle", true);
+                //anim.SetBool("idle", true);
                 isHurt = false;
             }
         }
         else if (coll.IsTouchingLayers(ground))
         {
             anim.SetBool("falling", false);
-            anim.SetBool("idle", true);
+            //anim.SetBool("idle", true);
         }
     }
 
@@ -102,9 +103,8 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "Collection")
         {
             cherryAudio.Play();
-            Destroy(collision.gameObject);
-            cherry += 1;
-            cherryNum.text = cherry + "";
+            collision.GetComponent<Animator>().Play("IsGet");
+            //Destroy(collision.gameObject);
         }
         //游戏重新开始
         if (collision.tag == "DeadLine")
@@ -162,9 +162,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Jump()
+    {
+        //跳跃
+        if (Input.GetButton("Jump") && coll.IsTouchingLayers(ground))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
+            audioSource.Play();
+            anim.SetBool("jumping", true);
+            anim.SetBool("crouch", false);
+        }
+    }
+
     void Restart()
     {
         //GetActiveScene().name:获取当前使用的场景的名字
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void CherryCount()
+    {
+        cherry += 1;
+        cherryNum.text = cherry + "";
     }
 }
